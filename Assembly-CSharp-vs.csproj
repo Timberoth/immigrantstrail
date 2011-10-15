@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Text\ScrollingTextArea.cs" />
      <Compile Include="Assets\Scripts\iTween\iTween.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Plugins\AnBSoft Common\Standard Font\Arial, Fancy.txt" />
