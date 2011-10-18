@@ -3,21 +3,166 @@ using System.Collections;
 
 public class ChoiceWindow : MonoBehaviour {
 	
-	private GameObject[] choiceObjects;
-	private GameObject questionObject;
+	// Choice Text refs
+	private SpriteText[] choices;
+	
+	// Question Text ref 
+	private SpriteText question;
+	
+	// Index of the current selected choice
+	private int selection = 0;
+	
+	// GameObjects that may be message senders if the choice is selected.
+	// Must be filled in by Initalize function.
+	private GameObject[] messageSenders;
+	private string[] messages;
+	private string[] messageData;
 	
 	
 	// Use this for initialization
 	void Start () {
+		// Create ChoiceObjects array
+		choices = new SpriteText[4];
 		
-		// Grab references to the sub objects within the ChoiceWindow
-		//questionObject
+		// Grab references to the child objects within the ChoiceWindow
+		Transform tempTransform;
 		
+		// Question object
+		tempTransform = transform.FindChild( "QuestionText" );
+		question = tempTransform.GetComponent<SpriteText>();
+		question.Text = "";
 		
+		// Choice objects
+		string objectName;
+		for( int i = 0; i < choices.Length; i++ )
+		{
+			objectName = "Choice"+(i+1)+"Text";
+			tempTransform = transform.FindChild( objectName );
+			choices[i] = tempTransform.GetComponent<SpriteText>();
+			
+			choices[i].Text = "";
+		}
+		
+		// THIS WINDOW IS USELESS UNTIL Initialize() is called.
+		
+		// TODO TESTING ONLY
+		string testQuestion = "How do you want to travel?";
+		string[] testChoices = {"Airplane","Boat","On Foot","Truck"};
+		GameObject[] testSenders = { gameObject, gameObject, gameObject, gameObject };
+		string[] testMessages = {"AllDone","AllDone","AllDone","AllDone"};
+		string[] testData = {"Your plane crashed","Your boat sank","You fell into a pit","Your truck exploded"};
+		Initialize( testQuestion, testChoices, testSenders, testMessages, testData );
 	}
+	
+
+	// Initialize this window with the real content.
+	void Initialize( string question, string[] choices, GameObject[] senders, string[] messages, string[] datas )
+	{
+		this.question.Text = question;
+		
+		// Assuming startingChoices length is 4
+		for( int i = 0; i < choices.Length; i++ )
+		{
+			this.choices[i].Text = choices[i];
+		}
+		
+		messageSenders = senders;
+		this.messages = messages;
+		messageData = datas;
+		
+		// First choice is selected by default
+		ChangeChoice( 0 );
+	}
+	
+	
+	// Deconstructor
+	void OnDestroy()
+	{
+		// Destory all SpriteText to avoid leaking memory
+		question.Delete();
+		for( int i = 0; i < choices.Length; i++ )
+		{
+			choices[i].Delete();
+			choices[i] = null;
+		}
+	}
+	
 	
 	// Update is called once per frame
 	void Update () {
 	
+		// TODO DEBUGING ONLY - NEEDS TO BE TOUCH AND MOUSE BASED
+		// Change the choice based on input
+		
+		// Up
+		if( Input.GetKeyUp( KeyCode.W ) )
+		{
+			// Roll over case
+			if( selection <= 0 )
+				ChangeChoice( 3 );
+			else
+				ChangeChoice( selection-1 );
+					
+		}
+		
+		// Down
+		if( Input.GetKeyUp( KeyCode.S ) )
+		{
+			// Roll over case
+			if( selection >= 3 )
+				ChangeChoice( 0 );
+			else
+				ChangeChoice( selection+1 );
+		}
+		
+		// Select
+		if( Input.GetKeyUp( KeyCode.Return ) )
+		{
+			ChooseAnswer();
+		}
+		
+		// TODO Handle touch input
+		
+		
+	}
+	
+	
+	void ChangeChoice( int newSelection )
+	{
+		// Play sound effect
+		
+		// Play particle effect
+		
+		// Deselect the last choice
+		choices[selection].SetColor( Color.white );
+		
+		// Update the selection
+		selection = newSelection;
+		
+		// Select the new choice
+		choices[selection].SetColor( Color.yellow );
+	}
+	
+	
+	// Choose the currently selected choice.
+	void ChooseAnswer()
+	{
+		// Play sound effect
+		
+		// Play particle effect
+		
+		// Fire the associate callback/s.
+		messageSenders[selection].SendMessage( messages[selection], messageData[selection], SendMessageOptions.DontRequireReceiver);
+		
+		
+		// Close this choice window.
+		GameObject.Destroy( this.gameObject );
+	}
+	
+	
+	// TODO Debug function to test the callbacks are being called.
+	void AllDone( string data )
+	{
+		print( data );
 	}
 }
