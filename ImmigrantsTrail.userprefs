@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Text\ScrollingTextArea.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUI\ChoiceWindow.cs">
     <Files>
-      <File FileName="Assets\Scripts\Text\ScrollingTextArea.cs" Line="181" Column="41" />
-      <File FileName="Assets\Scripts\iTween\iTween.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Text\ScrollingTextArea.cs" Line="181" Column="7" />
+      <File FileName="Assets\Scripts\GUI\ChoiceWindow.cs" Line="15" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
