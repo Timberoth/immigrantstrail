@@ -36,11 +36,12 @@ public class ChoiceWindow : MonoBehaviour {
 		string objectName;
 		for( int i = 0; i < choices.Length; i++ )
 		{
-			objectName = "Choice"+(i+1)+"Text";
+			objectName = "ChoiceButton"+(i+1);
 			tempTransform = transform.FindChild( objectName );
-			choices[i] = tempTransform.GetComponent<SpriteText>();
+			choices[i] = tempTransform.GetComponentInChildren<SpriteText>();			
 			
-			choices[i].Text = "";
+			// Start with no text
+			choices[i].Text = "";			
 		}
 		
 		// THIS WINDOW IS USELESS UNTIL Initialize() is called.
@@ -89,41 +90,7 @@ public class ChoiceWindow : MonoBehaviour {
 	
 	
 	// Update is called once per frame
-	void Update () {
-	
-		// TODO DEBUGING ONLY - NEEDS TO BE TOUCH AND MOUSE BASED
-		// Change the choice based on input
-		
-		// Up
-		if( Input.GetKeyUp( KeyCode.W ) )
-		{
-			// Roll over case
-			if( selection <= 0 )
-				ChangeChoice( 3 );
-			else
-				ChangeChoice( selection-1 );
-					
-		}
-		
-		// Down
-		if( Input.GetKeyUp( KeyCode.S ) )
-		{
-			// Roll over case
-			if( selection >= 3 )
-				ChangeChoice( 0 );
-			else
-				ChangeChoice( selection+1 );
-		}
-		
-		// Select
-		if( Input.GetKeyUp( KeyCode.Return ) )
-		{
-			ChooseAnswer();
-		}
-		
-		// TODO Handle touch input
-		
-		
+	void Update () {		
 	}
 	
 	
@@ -164,5 +131,39 @@ public class ChoiceWindow : MonoBehaviour {
 	void AllDone( string data )
 	{
 		print( data );
+	}
+		
+	
+	void Choice1Tap()
+	{
+		// Double tap means this choice is the answer
+		if( selection == 0 )
+			ChooseAnswer();
+		else
+			ChangeChoice( 0 );
+	}
+	
+	void Choice2Tap()
+	{
+		if( selection == 1 )
+			ChooseAnswer();
+		else
+			ChangeChoice( 1 );
+	}
+	
+	void Choice3Tap()
+	{
+		if( selection == 2 )
+			ChooseAnswer();
+		else
+			ChangeChoice( 2 );
+	}
+	
+	void Choice4Tap()
+	{
+		if( selection == 3 )
+			ChooseAnswer();
+		else
+			ChangeChoice( 3 );
 	}
 }
