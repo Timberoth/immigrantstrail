@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUI\ChoiceWindow.cs">
     <Files>
       <File FileName="Assets\Scripts\Text\ScrollingTextArea.cs" Line="181" Column="7" />
-      <File FileName="Assets\Scripts\GUI\ChoiceWindow.cs" Line="15" Column="3" />
+      <File FileName="Assets\Scripts\GUI\ChoiceWindow.cs" Line="85" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

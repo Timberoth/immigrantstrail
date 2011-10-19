@@ -19,6 +19,11 @@ public class ChoiceWindow : MonoBehaviour {
 	private string[] messageData;
 	
 	
+	// Audio Ref
+	private AudioSource highlightSound = null;
+	private AudioSource selectionSound = null;
+	
+	
 	// Use this for initialization
 	void Start () {
 		// Create ChoiceObjects array
@@ -43,6 +48,10 @@ public class ChoiceWindow : MonoBehaviour {
 			// Start with no text
 			choices[i].Text = "";			
 		}
+		
+		
+		// Initalize audio
+		InitializeAudio();
 		
 		// THIS WINDOW IS USELESS UNTIL Initialize() is called.
 		
@@ -72,7 +81,25 @@ public class ChoiceWindow : MonoBehaviour {
 		messageData = datas;
 		
 		// First choice is selected by default
-		ChangeChoice( 0 );
+		selection = 0;
+		this.choices[selection].SetColor( Color.yellow );
+	}
+	
+	
+	void InitializeAudio()
+	{
+		// Create references to the attached audio sources.
+		foreach( AudioSource source in this.GetComponents<AudioSource>() )
+		{			
+			if( source.clip.name == "ChoiceHighlight" )
+			{
+				highlightSound = source;				
+			}			
+			else if( source.clip.name == "ChoiceSelection" )
+			{
+				selectionSound = source;				
+			}			
+		}		
 	}
 	
 	
@@ -96,7 +123,11 @@ public class ChoiceWindow : MonoBehaviour {
 	
 	void ChangeChoice( int newSelection )
 	{
-		// Play sound effect
+		// Play sound
+		if( highlightSound != null )
+		{
+			AudioSource.PlayClipAtPoint(highlightSound.clip, Vector3.zero);			
+		}
 		
 		// Play particle effect
 		
@@ -114,7 +145,11 @@ public class ChoiceWindow : MonoBehaviour {
 	// Choose the currently selected choice.
 	void ChooseAnswer()
 	{
-		// Play sound effect
+		// Play sound
+		if( selectionSound != null )
+		{
+			AudioSource.PlayClipAtPoint(selectionSound.clip, Vector3.zero);			
+		}
 		
 		// Play particle effect
 		
